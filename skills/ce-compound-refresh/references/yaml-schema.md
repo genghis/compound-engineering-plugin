@@ -23,7 +23,7 @@ The `problem_type` determines which **track** applies. Each track has different 
 - **module**: Module or area affected
 - **date**: ISO date in `YYYY-MM-DD`
 - **problem_type**: One of the values listed in the Tracks table above
-- **component**: One of `rails_model`, `rails_controller`, `rails_view`, `service_object`, `background_job`, `database`, `frontend_stimulus`, `hotwire_turbo`, `email_processing`, `brief_system`, `assistant`, `authentication`, `payments`, `development_workflow`, `testing_framework`, `documentation`, `tooling`
+- **component**: One of `lambda_handler`, `cdk_stack`, `microservice`, `background_job`, `dynamodb`, `api_gateway`, `react_web_component`, `react_native_screen`, `email_processing`, `brief_system`, `assistant`, `authentication`, `payments`, `development_workflow`, `testing_framework`, `documentation`, `tooling`
 - **severity**: One of `critical`, `high`, `medium`, `low`
 
 ## Bug Track Fields

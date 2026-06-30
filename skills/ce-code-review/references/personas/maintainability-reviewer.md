@@ -50,7 +50,7 @@ Use the anchored confidence rubric in the subagent template. Persona-specific gu
 
 - **Complexity that mirrors domain complexity** — many branches when the business rules genuinely require them.
 - **Justified abstractions with multiple real consumers** — the abstraction is earning its keep.
-- **Framework-mandated patterns** — Rails conventions, React hooks rules, etc., when the framework requires the structure.
+- **Framework-mandated patterns** — React hooks rules, CDK construct conventions, etc., when the framework requires the structure.
 - **Style-only preferences** — formatting, import order, minor naming taste with no maintenance cost.
 - **Philosophy without a concrete structural fix** — "I would use sessions not JWT" unless the diff introduces a concrete, verifiable maintainability regression you can cite in code.
 

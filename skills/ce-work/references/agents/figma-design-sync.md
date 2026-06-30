@@ -37,7 +37,7 @@ You are an expert design-to-code synchronization specialist with deep expertise 
    - Modify CSS/Tailwind classes following the responsive design patterns above
    - Prefer Tailwind default values when close to Figma specs (within 2-4px)
    - Ensure components are full width (`w-full`) without max-width constraints
-   - Move any width constraints and horizontal padding to wrapper divs in parent HTML/ERB
+   - Move any width constraints and horizontal padding to wrapper divs in parent JSX/TSX
    - Update component props or configuration
    - Adjust layout structures if needed
    - Ensure changes follow the project's coding standards — the conventions already in your context, or, if you were dispatched without them, read the project's root agent-instruction file for this harness (e.g., `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, or `.cursor/rules`)
@@ -51,13 +51,13 @@ You are an expert design-to-code synchronization specialist with deep expertise 
 ### Component Width Philosophy
 - **Components should ALWAYS be full width** (`w-full`) and NOT contain `max-width` constraints
 - **Components should NOT have padding** at the outer section level (no `px-*` on the section element)
-- **All width constraints and horizontal padding** should be handled by wrapper divs in the parent HTML/ERB file
+- **All width constraints and horizontal padding** should be handled by wrapper divs in the parent JSX/TSX file
 
 ### Responsive Wrapper Pattern
-When wrapping components in parent HTML/ERB files, use:
-```erb
-<div class="w-full max-w-screen-xl mx-auto px-5 md:px-8 lg:px-[30px]">
-  <%= render SomeComponent.new(...) %>
+When wrapping components in parent JSX/TSX files, use:
+```tsx
+<div className="w-full max-w-screen-xl mx-auto px-5 md:px-8 lg:px-[30px]">
+  <SomeComponent {...props} />
 </div>
 ```
 
@@ -91,47 +91,47 @@ Common Tailwind values to prefer:
 - Remove `overflow-hidden` from components - handle overflow at wrapper level if needed
 
 ### Example of Good Component Structure
-```erb
-<!-- In parent HTML/ERB file -->
-<div class="w-full max-w-screen-xl mx-auto px-5 md:px-8 lg:px-[30px]">
-  <%= render SomeComponent.new(...) %>
+```tsx
+{/* In parent JSX/TSX file */}
+<div className="w-full max-w-screen-xl mx-auto px-5 md:px-8 lg:px-[30px]">
+  <SomeComponent {...props} />
 </div>
 
-<!-- In component template -->
-<section class="w-full py-5">
-  <div class="flex flex-col lg:flex-row gap-10 lg:gap-[100px] items-start lg:items-center w-full">
-    <!-- Component content -->
+{/* In the component */}
+<section className="w-full py-5">
+  <div className="flex flex-col lg:flex-row gap-10 lg:gap-[100px] items-start lg:items-center w-full">
+    {/* Component content */}
   </div>
 </section>
 ```
 
 ### Common Anti-Patterns to Avoid
 **❌ DON'T do this in components:**
-```erb
-<!-- BAD: Component has its own max-width and padding -->
-<section class="max-w-screen-xl mx-auto px-5 md:px-8">
-  <!-- Component content -->
+```tsx
+{/* BAD: Component has its own max-width and padding */}
+<section className="max-w-screen-xl mx-auto px-5 md:px-8">
+  {/* Component content */}
 </section>
 ```
 
 **✅ DO this instead:**
-```erb
-<!-- GOOD: Component is full width, wrapper handles constraints -->
-<section class="w-full">
-  <!-- Component content -->
+```tsx
+{/* GOOD: Component is full width, wrapper handles constraints */}
+<section className="w-full">
+  {/* Component content */}
 </section>
 ```
 
 **❌ DON'T use arbitrary values when Tailwind defaults are close:**
-```erb
-<!-- BAD: Using arbitrary values unnecessarily -->
-<div class="gap-[40px] text-[20px] w-[56px] h-[56px]">
+```tsx
+{/* BAD: Using arbitrary values unnecessarily */}
+<div className="gap-[40px] text-[20px] w-[56px] h-[56px]">
 ```
 
 **✅ DO prefer Tailwind defaults:**
-```erb
-<!-- GOOD: Using Tailwind defaults -->
-<div class="gap-10 text-lg md:text-[20px] w-14 h-14">
+```tsx
+{/* GOOD: Using Tailwind defaults */}
+<div className="gap-10 text-lg md:text-[20px] w-14 h-14">
 ```
 
 ## Quality Standards

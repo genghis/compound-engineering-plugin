@@ -7,8 +7,8 @@
 #
 # Arguments:
 #   path   (optional) -- project root directory. Defaults to the git repo root.
-#   --type (optional) -- framework type to scope probes (rails|next|vite|nuxt|
-#                        astro|remix|sveltekit|procfile). Unset runs all probes.
+#   --type (optional) -- framework type to scope probes (next|vite|procfile).
+#                        Unset runs all probes.
 #   --port (optional) -- explicit port override. Emitted immediately when present.
 #
 # Output:
@@ -18,18 +18,17 @@
 # Probe order (FIRST HIT WINS):
 #
 #   1. Explicit --port flag
-#   2. Framework config files (next.config.*, vite.config.*, nuxt.config.*,
-#      astro.config.*) -- conservative regex matching only numeric literal
-#      port values. Variable references like process.env.PORT or getPort()
-#      are deliberately not matched; the probe falls through.
-#   3. Rails: config/puma.rb for `port <n>`
-#   4. Procfile.dev: web line scanned for -p/-p=<n>/--port/--port=<n>
-#   5. docker-compose.yml: line-anchored grep for "- "<n>:<n>"" port mapping
-#   6. package.json: dev/start script for --port/-p flags
-#   7. .env files in override order: .env.local -> .env.development -> .env
+#   2. Framework config files (next.config.*, vite.config.*) -- conservative
+#      regex matching only numeric literal port values. Variable references
+#      like process.env.PORT or getPort() are deliberately not matched; the
+#      probe falls through.
+#   3. Procfile.dev: web line scanned for -p/-p=<n>/--port/--port=<n>
+#   4. docker-compose.yml: line-anchored grep for "- "<n>:<n>"" port mapping
+#   5. package.json: dev/start script for --port/-p flags
+#   6. .env files in override order: .env.local -> .env.development -> .env
 #      (first hit wins). Values are parsed with quote stripping (" and ')
 #      and comment truncation (at #, after trimming whitespace).
-#   8. Framework default lookup table
+#   7. Framework default lookup table
 #
 # Why config-before-prose: framework config files are the most reliable source
 # of truth for the intended port; instruction files and env files are often
@@ -97,13 +96,7 @@ should_probe() {
   fi
 
   case "$ptype" in
-    rails)
-      case "$probe" in
-        puma|procfile|docker-compose|env|default) return 0 ;;
-        *) return 1 ;;
-      esac
-      ;;
-    next|nuxt|astro|remix|vite|sveltekit)
+    next|vite)
       case "$probe" in
         framework-config|package-json|env|default) return 0 ;;
         *) return 1 ;;
@@ -179,14 +172,6 @@ if should_probe "$PROJ_TYPE" "framework-config"; then
     "$PROJECT_ROOT"/vite.config.ts \
     "$PROJECT_ROOT"/vite.config.mjs \
     "$PROJECT_ROOT"/vite.config.cjs \
-    "$PROJECT_ROOT"/nuxt.config.js \
-    "$PROJECT_ROOT"/nuxt.config.ts \
-    "$PROJECT_ROOT"/nuxt.config.mjs \
-    "$PROJECT_ROOT"/nuxt.config.cjs \
-    "$PROJECT_ROOT"/astro.config.js \
-    "$PROJECT_ROOT"/astro.config.ts \
-    "$PROJECT_ROOT"/astro.config.mjs \
-    "$PROJECT_ROOT"/astro.config.cjs \
   ; do
     if [ ! -f "$cfg" ]; then
       continue
@@ -208,20 +193,7 @@ if should_probe "$PROJ_TYPE" "framework-config"; then
   done
 fi
 
-# ── Probe 3: Rails config/puma.rb ───────────────────────────────────────────
-
-if should_probe "$PROJ_TYPE" "puma"; then
-  puma_file="$PROJECT_ROOT/config/puma.rb"
-  if [ -f "$puma_file" ]; then
-    puma_port=$(grep -Eo 'port[[:space:]]+[0-9]+' "$puma_file" 2>/dev/null | head -1 | grep -Eo '[0-9]+')
-    if [ -n "$puma_port" ]; then
-      echo "$puma_port"
-      exit 0
-    fi
-  fi
-fi
-
-# ── Probe 4: Procfile.dev ───────────────────────────────────────────────────
+# ── Probe 3: Procfile.dev ───────────────────────────────────────────────────
 
 if should_probe "$PROJ_TYPE" "procfile"; then
   procfile="$PROJECT_ROOT/Procfile.dev"
@@ -239,7 +211,7 @@ if should_probe "$PROJ_TYPE" "procfile"; then
   fi
 fi
 
-# ── Probe 5: docker-compose.yml ─────────────────────────────────────────────
+# ── Probe 4: docker-compose.yml ─────────────────────────────────────────────
 
 if should_probe "$PROJ_TYPE" "docker-compose"; then
   compose_file="$PROJECT_ROOT/docker-compose.yml"
@@ -253,7 +225,7 @@ if should_probe "$PROJ_TYPE" "docker-compose"; then
   fi
 fi
 
-# ── Probe 6: package.json scripts ───────────────────────────────────────────
+# ── Probe 5: package.json scripts ───────────────────────────────────────────
 
 if should_probe "$PROJ_TYPE" "package-json"; then
   pkg_file="$PROJECT_ROOT/package.json"
@@ -267,7 +239,7 @@ if should_probe "$PROJ_TYPE" "package-json"; then
   fi
 fi
 
-# ── Probe 7: .env files ─────────────────────────────────────────────────────
+# ── Probe 6: .env files ─────────────────────────────────────────────────────
 
 if should_probe "$PROJ_TYPE" "env"; then
   for envfile in \
@@ -283,18 +255,15 @@ if should_probe "$PROJ_TYPE" "env"; then
   done
 fi
 
-# ── Probe 8: Framework default lookup table ──────────────────────────────────
+# ── Probe 7: Framework default lookup table ──────────────────────────────────
 
 if should_probe "$PROJ_TYPE" "default"; then
   case "$PROJ_TYPE" in
-    rails|next|nuxt|remix|procfile|"")
+    next|procfile|"")
       echo "3000"
       ;;
-    vite|sveltekit)
+    vite)
       echo "5173"
-      ;;
-    astro)
-      echo "4321"
       ;;
     *)
       echo "3000"

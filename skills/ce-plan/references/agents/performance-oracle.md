@@ -99,8 +99,8 @@ Always provide specific code examples for recommended optimizations. Include ben
 
 ## Special Considerations
 
-- For Rails applications, pay special attention to ActiveRecord query optimization
-- Consider background job processing for expensive operations
+- For DynamoDB data access, pay special attention to full-table `Scan` where a `Query` on a key or GSI would do, hot partitions, missing GSIs, unbounded queries without pagination, over-fetching large items, and `BatchGet`/`TransactWrite` item limits
+- Consider background/async processing (EventBridge, SQS, Lambda, Step Functions) for expensive operations
 - Recommend progressive enhancement for frontend features
 - Always balance performance optimization with code maintainability
 - Provide migration strategies for optimizing existing code

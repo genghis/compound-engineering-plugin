@@ -28,8 +28,7 @@ Before diving in, answer three questions:
 | LangChain / LangGraph | Frontend framework varies | `@tool` decorators, `StructuredTool` subclasses, `tools` arrays |
 | OpenAI Assistants | Frontend framework varies | `tools` array in assistant config, function definitions |
 | Claude Code plugins | N/A (CLI) | `agents/*.md`, `skills/*/SKILL.md`, tool lists in frontmatter |
-| Rails + MCP | `button_to`, `form_with`, Turbo/Stimulus actions | `tool()` in MCP server definitions, `.mcp.json` |
-| Generic | Grep for `onClick`, `onSubmit`, `onTap`, `Button`, `onPressed`, form actions | Grep for `tool(`, `function_call`, `tools:`, tool registration patterns |
+| Generic | Grep for `onClick`, `onSubmit`, `Button`, form actions | Grep for `tool(`, `function_call`, `tools:`, tool registration patterns |
 
 ### 1. Map the Landscape
 

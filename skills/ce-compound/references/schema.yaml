@@ -70,14 +70,14 @@ required_fields:
   component:
     type: enum
     values:
-      - rails_model
-      - rails_controller
-      - rails_view
-      - service_object
+      - lambda_handler
+      - cdk_stack
+      - microservice
       - background_job
-      - database
-      - frontend_stimulus
-      - hotwire_turbo
+      - dynamodb
+      - api_gateway
+      - react_web_component
+      - react_native_screen
       - email_processing
       - brief_system
       - assistant

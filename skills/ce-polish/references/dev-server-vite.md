@@ -45,4 +45,4 @@ Vite binds to `127.0.0.1` by default. For polish running inside a devcontainer o
 ## Common gotchas
 
 - **HMR websocket port:** Vite's HMR uses a separate websocket that inherits the dev-server port by default. If the project pins `server.hmr.port` in `vite.config.ts`, the polish reachability probe against the dev-server port still works, but the embedded browser may need additional configuration to reach HMR.
-- **Framework on top of Vite:** SvelteKit, SolidStart, Qwik City, and Astro all use Vite but add their own dev scripts. The `vite` signature catches them, and `npm run dev` is the right command for all of them. Different default ports apply (SvelteKit: 5173, Astro: 4321, Qwik: 5173) — rely on the cascade to pick up the actual port from `package.json` or `.env`.
+- **Framework on top of Vite:** a React app scaffolded with Vite (`@vitejs/plugin-react`) uses Vite directly — the `vite` signature catches it and `npm run dev` is the right command. The default port is 5173, but rely on the cascade to pick up the actual port from `vite.config.*`, `package.json`, or `.env`.

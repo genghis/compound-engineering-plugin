@@ -1,11 +1,11 @@
 # Procfile / Overmind dev-server recipe (auto-detect fallback)
 
-Loaded when `detect-project-type.sh` returns `procfile` and there is no `.claude/launch.json` to consult. Rails apps with `bin/dev` take precedence over the bare Procfile path (see `dev-server-rails.md`).
+Loaded when `detect-project-type.sh` returns `procfile` and there is no `.claude/launch.json` to consult — i.e. a multi-process dev setup driven by a `Procfile.dev` rather than a single framework dev server.
 
 ## Signature
 
 - `Procfile` or `Procfile.dev` exists at the repo root
-- `bin/dev` is **not** present (if it is, use the Rails recipe)
+- No framework signature (`next.config.*`, `vite.config.*`) took precedence at the repo root
 
 ## Start command
 
@@ -28,8 +28,8 @@ If both are missing, prompt the user for the start command rather than guessing.
 Default: `3000`. Procfile-based projects list their processes in `Procfile.dev`, so the authoritative port comes from the `web:` line:
 
 ```
-web: bundle exec puma -p 3000 -C config/puma.rb
-worker: bundle exec sidekiq
+web: npm run dev -- --port 3000
+worker: npm run worker
 ```
 
 Parse the `web:` line for `-p <n>` or `--port <n>`. If neither is present, fall through to the cascade in `references/dev-server-detection.md`.

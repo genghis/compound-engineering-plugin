@@ -84,12 +84,12 @@ Map changed files to testable routes:
 
 | File Pattern | Route(s) |
 |-------------|----------|
-| `app/views/users/*` | `/users`, `/users/:id`, `/users/new` |
-| `app/controllers/settings_controller.rb` | `/settings` |
-| `app/javascript/controllers/*_controller.js` | Pages using that Stimulus controller |
-| `app/components/*_component.rb` | Pages rendering that component |
-| `app/views/layouts/*` | All pages (test homepage at minimum) |
-| `app/assets/stylesheets/*` | Visual regression on key pages |
+| `apps/web/src/pages/users/*` | `/users`, `/users/:id`, `/users/new` |
+| `apps/web/src/pages/settings/*` | `/settings` |
+| `apps/web/src/hooks/*` | Pages using that hook |
+| `apps/web/src/components/*` | Pages rendering that component |
+| `apps/web/src/layouts/*` | All pages (test homepage at minimum) |
+| `apps/web/src/**/*.css`, `*.scss` | Visual regression on key pages |
 | `app/helpers/*_helper.rb` | Pages using that helper |
 | `src/app/*` (Next.js) | Corresponding routes |
 | `src/components/*` | Pages using those components |
@@ -152,11 +152,7 @@ else
   if [ "${PIPELINE_MODE}" = "1" ]; then
     # Auto-start in pipeline — pick the right command for this project
     echo "Starting dev server on port ${PORT}..."
-    if [ -f "bin/dev" ]; then
-      PORT=${PORT} bin/dev > /tmp/dev-server-${PORT}.log 2>&1 &
-    elif [ -f "bin/rails" ]; then
-      bin/rails server -p ${PORT} > /tmp/dev-server-${PORT}.log 2>&1 &
-    elif [ -f "package.json" ]; then
+    if [ -f "package.json" ]; then
       PORT=${PORT} npm run dev > /tmp/dev-server-${PORT}.log 2>&1 &
     fi
     # Wait up to 30 seconds for server to become ready

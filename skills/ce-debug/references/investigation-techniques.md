@@ -164,11 +164,16 @@ The minimized repro often reveals the root cause directly — "the bug only trig
 
 ## Framework-Specific Debugging
 
-### Rails
-- Check callbacks: `before_save`, `after_commit`, `around_action` — these execute implicitly and can alter state
-- Check middleware chain: `rake middleware` lists the full stack
-- Check Active Record query generation: `.to_sql` on any relation
-- Use `Rails.logger.debug` with tagged logging for request tracing
+### React
+- Unnecessary re-renders: React DevTools Profiler (or `why-did-you-render`) to find what changed
+- Stale closures in hooks: check `useEffect`/`useCallback`/`useMemo` dependency arrays for captured stale values
+- Effect timing: a missing cleanup return causing leaks or double-subscribe; StrictMode double-invokes effects in dev
+- State batching: a read right after `setState` sees the old value until the next render
+
+### AWS Lambda / DynamoDB
+- Per-invocation logging: CloudWatch Logs for the function; add structured logs keyed by request id
+- DynamoDB access: log the `Query`/`Scan` params and `ConsumedCapacity`; a full `Scan` where a `Query` was intended is a common culprit
+- Cold-start vs warm state: module-scope state persists across invocations on a warm container — a frequent source of "works once, then misbehaves"
 
 ### Node.js
 - Async stack traces: run with `--async-stack-traces` flag for full async call chains

@@ -57,6 +57,6 @@ Walk each flow as each primary persona (from STRATEGY.md "Who it's for", VISION.
 | layout / global stylesheet | All key pages (visual regression) — at minimum the homepage |
 | controller / route handler | The routes it serves |
 | helper / util used in views | Pages relying on it |
-| JS / Stimulus / client controller | Pages where that behavior is wired |
+| React component / hook / client logic | Pages where that behavior is wired |
 
 Build the URL list from this mapping, then expand each URL into the journeys above.

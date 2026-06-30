@@ -7,25 +7,19 @@ This cascade runs **only when** `.claude/launch.json` is absent or has no `port`
 ## Priority order
 
 1. **Explicit `--port` flag** -- if the caller passed `--port <n>`, use it directly.
-2. **Framework config files** -- `next.config.*`, `vite.config.*`, `nuxt.config.*`, `astro.config.*` scanned with a conservative regex matching only numeric literal port values. Variable references (`process.env.PORT`, `getPort()`) are deliberately not matched.
-3. **Rails `config/puma.rb`** -- grep for `port <n>`.
-4. **`Procfile.dev`** -- web line scanned for `-p <n>` / `--port <n>` / `-p=<n>` / `--port=<n>`.
-5. **`docker-compose.yml`** -- line-anchored grep for `"<n>:<n>"` port mapping patterns. Not full YAML parsing.
-6. **`package.json`** -- `dev`/`start` scripts scanned for `--port <n>` / `-p <n>` / `--port=<n>` / `-p=<n>`.
-7. **`.env` files** -- checked in override order: `.env.local` -> `.env.development` -> `.env` (first hit wins). Parses `PORT=<n>` with quote stripping and comment truncation.
-8. **Framework default lookup table** -- see table below.
+2. **Framework config files** -- `next.config.*`, `vite.config.*` scanned with a conservative regex matching only numeric literal port values. Variable references (`process.env.PORT`, `getPort()`) are deliberately not matched.
+3. **`Procfile.dev`** -- web line scanned for `-p <n>` / `--port <n>` / `-p=<n>` / `--port=<n>`.
+4. **`docker-compose.yml`** -- line-anchored grep for `"<n>:<n>"` port mapping patterns. Not full YAML parsing.
+5. **`package.json`** -- `dev`/`start` scripts scanned for `--port <n>` / `-p <n>` / `--port=<n>` / `-p=<n>`.
+6. **`.env` files** -- checked in override order: `.env.local` -> `.env.development` -> `.env` (first hit wins). Parses `PORT=<n>` with quote stripping and comment truncation.
+7. **Framework default lookup table** -- see table below.
 
 ## Framework defaults
 
 | Framework | Default port |
 |-----------|-------------|
-| Rails | 3000 |
 | Next.js | 3000 |
-| Nuxt | 3000 |
-| Remix (classic) | 3000 |
 | Vite | 5173 |
-| SvelteKit | 5173 |
-| Astro | 4321 |
 | Procfile | 3000 |
 | Unknown | 3000 |
 

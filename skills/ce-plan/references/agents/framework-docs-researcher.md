@@ -38,7 +38,7 @@ For planning invocations, convert framework documentation into implementation-pl
 
 1. **Initial Assessment**:
    - Identify the specific framework, library, or gem being researched
-   - Determine the installed version from Gemfile.lock or package files
+   - Determine the installed version from package.json / lockfiles (e.g. package-lock.json) or other manifest files
    - Understand the specific feature or problem being addressed
 
 2. **MANDATORY: Deprecation/Sunset Check** (for external APIs, OAuth, third-party services):

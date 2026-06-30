@@ -25,7 +25,7 @@ Polish reads `.claude/launch.json` at the repo root to resolve the dev-server st
 | Field | Required | Purpose |
 |-------|----------|---------|
 | `name` | yes (when multiple configurations) | Used to disambiguate when the array has more than one entry. Polish asks the user to pick by `name`. |
-| `runtimeExecutable` | yes | The binary polish spawns (e.g., `bin/dev`, `npm`, `overmind`, `bun`). |
+| `runtimeExecutable` | yes | The binary polish spawns (e.g., `npm`, `pnpm`, `yarn`, `bun`, `overmind`). |
 | `runtimeArgs` | no | Array of arguments passed to `runtimeExecutable`. Default: empty array. |
 | `port` | yes | The port the dev server will listen on. Polish probes `http://localhost:<port>` for reachability and uses it for the IDE browser handoff. |
 | `cwd` | no | Repo-relative working directory for the dev server. Default: repo root. Useful for monorepos (`apps/web`, `packages/frontend`). |
@@ -34,22 +34,6 @@ Polish reads `.claude/launch.json` at the repo root to resolve the dev-server st
 ## Stub template (written on first run when user accepts)
 
 When polish auto-detects a project type and the user confirms "Save this as `.claude/launch.json`?", polish writes a minimal stub derived from the detected type. These templates intentionally hard-code common defaults — users can edit them later.
-
-### Rails stub
-
-```json
-{
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Rails dev",
-      "runtimeExecutable": "bin/dev",
-      "runtimeArgs": [],
-      "port": 3000
-    }
-  ]
-}
-```
 
 ### Next.js stub
 
@@ -94,70 +78,6 @@ When polish auto-detects a project type and the user confirms "Save this as `.cl
       "runtimeExecutable": "overmind",
       "runtimeArgs": ["start", "-f", "Procfile.dev"],
       "port": 3000
-    }
-  ]
-}
-```
-
-### Nuxt stub
-
-```json
-{
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Nuxt dev",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
-      "port": 3000
-    }
-  ]
-}
-```
-
-### Astro stub
-
-```json
-{
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Astro dev",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
-      "port": 4321
-    }
-  ]
-}
-```
-
-### Remix stub
-
-```json
-{
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Remix dev",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
-      "port": 3000
-    }
-  ]
-}
-```
-
-### SvelteKit stub
-
-```json
-{
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "SvelteKit dev",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
-      "port": 5173
     }
   ]
 }
