@@ -95,7 +95,7 @@ If the plan has Implementation Units, use them as a starting guide for commit bo
 **Commit workflow:**
 ```bash
 # 1. Verify tests pass (use project's test command)
-# Examples: bin/rails test, npm test, pytest, go test, etc.
+# Examples: npm test, npx jest, npx vitest, pytest, go test, etc.
 
 # 2. Stage only files related to this logical unit (not `git add .`)
 git add <files related to this logical unit>

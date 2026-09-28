@@ -27,7 +27,7 @@ Reviewer personas are selected in layers. The persona catalog in `references/per
 - `adversarial-reviewer` lens — >=50 changed code lines, or auth / payments / persistence writes / event publication / retry or concurrency semantics / external APIs, or a **silent-pass verification mechanism** regardless of size. Satisfy this lens with the independent cross-model adversarial pass when a peer job on the approved route starts successfully. Dispatch the in-process `adversarial-reviewer` when the peer cannot start, or when the fold-in step later finds the peer never ran, or gives up after a retry on the same route fails on a rate limit and restores the local reviewer; do not run both reviews on the same brief.
 - `previous-comments-reviewer` — PR with existing review comments (PR-only, comment-gated)
 
-**Stack-specific conditional (per diff):** `julik-frontend-races-reviewer` (Stimulus/Turbo, DOM events, async UI) and `swift-ios-reviewer` (Swift/SwiftUI/UIKit, entitlements, Core Data, `.pbxproj`).
+**Stack-specific conditional (per diff):** `julik-frontend-races-reviewer` (React components/hooks, DOM events, async UI) and `swift-ios-reviewer` (Swift/SwiftUI/UIKit, entitlements, Core Data, `.pbxproj`).
 
 **CE conditional (migration-specific):** local prompt asset `deployment-verification-agent` — deployment checklist + rollback when the migration gate applies and the change is risky.
 

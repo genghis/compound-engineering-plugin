@@ -44,7 +44,7 @@ These reviewers cover specialized runtime behavior. Structural and maintainabili
 
 | Persona | Agent | Select when diff touches... |
 |---------|-------|---------------------------|
-| `julik-frontend-races` | `julik-frontend-races-reviewer` | Stimulus/Turbo controllers, DOM event wiring, timers, async UI flows, animations, or frontend state transitions with race potential |
+| `julik-frontend-races` | `julik-frontend-races-reviewer` | React components and hooks, DOM event wiring, timers, async UI flows, animations, or frontend state transitions with race potential |
 | `swift-ios` | `swift-ios-reviewer` | Swift files, SwiftUI views, UIKit controllers, `.entitlements`, `PrivacyInfo.xcprivacy`, `.xcdatamodeld`, `Package.swift`, `Package.resolved`, storyboards, XIBs, or semantic build-setting / target-membership / code-signing changes in `.pbxproj` |
 
 ## CE Conditional Local Prompt Assets (migration-specific)
